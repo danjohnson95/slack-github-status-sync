@@ -1,0 +1,24 @@
+service:
+  name: github-slack-status-sync
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  LinkSlackWithGitHub:
+    handler: handler.accountLinker
+    events:
+      - http:
+          method: get
+          path: link-account
+  StatusUpdater:
+    handler: handler.webhook
+    events:
+      - http:
+          method: post
+          path: webhook
